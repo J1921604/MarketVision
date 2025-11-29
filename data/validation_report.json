@@ -1,0 +1,21 @@
+{
+  "timestamp": "2025-11-29T18:37:14.751927",
+  "results": [
+    {
+      "file": "data\\price\\9501.T.csv",
+      "type": "price",
+      "valid": false,
+      "errors": [
+        "ファイルが存在しません"
+      ]
+    },
+    {
+      "file": "data\\price\\9502.T.csv",
+      "type": "price",
+      "valid": false,
+      "errors": [
+        "ファイルが存在しません"
+      ]
+    }
+  ]
+}

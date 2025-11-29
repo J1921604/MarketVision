@@ -1,7 +1,7 @@
 # 機能仕様書: MarketVision 株価テクニカル分析ダッシュボード
 
-**Feature Branch**: `001-marketvision-implementation`  
-**Created**: 2025-12-15  
+**Feature Branch**: `001-MarketVision`  
+**Created**: 2025-11-29  
 **Status**: Draft  
 **Version**: 1.0.0  
 **Input**: MarketVision株価テクニカル分析ダッシュボードの実装
@@ -18,7 +18,7 @@
 
 ---
 
-## ユーザーシナリオとテスト *(必須)*
+## ユーザーシナリオとテスト
 
 ### ユーザーストーリー1 - 株価チャート表示 (Priority: P1)
 
@@ -42,7 +42,7 @@ Stooq (pandas_datareader) から9501.Tまたは9502.Tのデータを取得し、
 ### ユーザーストーリー2 - テクニカル指標の重ね表示 (Priority: P1)
 
 **ストーリー**:
-投資家として、株価チャートに移動平均線（SMA5/25/75）、RSI、MACD、ボリンジャーバンドを重ね表示し、テクニカル分析による売買シグナルを把握したい。
+投資家として、株価チャートに移動平均線（SMA5/25/50/75）、RSI、MACD、ボリンジャーバンドを重ね表示し、テクニカル分析による売買シグナルを把握したい。
 
 **優先順位の理由**:
 テクニカル指標は株価の単純な推移以上の洞察を提供し、投資判断の精度を大きく向上させる。チャート表示単体（US1）と組み合わせることで、実用的な分析ツールとして成立する。
@@ -77,7 +77,7 @@ Stooq (pandas_datareader) から9501.Tまたは9502.Tのデータを取得し、
 
 ---
 
-### ユーザーストーリー5 - イベントマーカー表示 (Priority: P3)
+### ユーザーストーリー4 - イベントマーカー表示 (Priority: P3)
 
 **ストーリー**:
 投資家として、決算発表日や権利落ち日などの重要イベントをチャート上にマーカーとして表示し、価格変動との関連性を分析したい。
@@ -96,7 +96,7 @@ Stooq (pandas_datareader) から9501.Tまたは9502.Tのデータを取得し、
 
 ---
 
-### ユーザーストーリー6 - ±5%価格変動アラート (Priority: P3)
+### ユーザーストーリー5 - ±5%価格変動アラート (Priority: P3)
 
 **ストーリー**:
 投資家として、前日比±5%以上の急激な価格変動があった場合、ダッシュボード上部にアラートバナーが表示され、重要な変動を見逃さないようにしたい。
@@ -125,22 +125,22 @@ Stooq (pandas_datareader) から9501.Tまたは9502.Tのデータを取得し、
 
 ---
 
-## 要件 *(必須)*
+## 要件
 
 ### 機能要件
 
 - **FR-001**: システムは東京電力HD（9501.T）と中部電力（9502.T）の過去10年間の日次株価データ（OHLCV）を表示しなければならない
 - **FR-002**: システムはStooq (pandas_datareader) を使用してデータを取得し、データアクセス方針（リトライ制限等）を遵守しなければならない
 - **FR-003**: システムは取得したデータをCSV形式（`data/price/{symbol}.csv`）で保存し、GitHub Actionsによる定期更新（毎時実行）を行わなければならない
-- **FR-004**: システムは移動平均線（SMA5/25/75）、RSI（14日）、MACD（12/26/9）、ボリンジャーバンド（20日/±2σ）をpandas/numpyで計算し、CSV形式で保存しなければならない
-- **FR-006**: システムは決算日・権利落ち日等のイベント情報を`data/events/corporate_events.json`から読み込み、チャート上にマーカー表示しなければならない
-- **FR-007**: システムは前日比±5%以上の価格変動を検出し、`data/alerts.json`に記録してダッシュボード上部にバナー表示しなければならない
-- **FR-008**: ユーザーは期間フィルタ（1M/3M/6M/1Y/3Y/5Y/Custom）を選択し、指定期間のデータのみを表示できなければならない
-- **FR-009**: ユーザーはテクニカル指標のON/OFF切り替えをチェックボックスで操作し、リアルタイムにチャート表示を更新できなければならない
-- **FR-010**: システムはGitHub Pagesにビルド成果物をデプロイし、静的Webサイトとして公開しなければならない
-- **FR-011**: システムはデータ更新失敗時、GitHub Issueを自動起票し、ラベル「data-failure」を付与しなければならない
-- **FR-012**: システムはすべてのCSV/JSONデータにスキーマバージョン情報を含め、`validate_data.py`でスキーマ検証を実行しなければならない
-- **FR-013**: システムはパフォーマンス基準（LCP < 2.5秒、TTI < 2.0秒、初期ロード < 500KB、チャート再描画 < 200ms）を満たさなければならない
+- **FR-004**: システムは移動平均線（SMA5/25/50/75）、RSI（14日）、MACD（12/26/9）、ボリンジャーバンド（20日/±2σ）をpandas/numpyで計算し、CSV形式で保存しなければならない
+- **FR-005**: ユーザーは期間フィルタ（1M/3M/6M/1Y/3Y/5Y/Custom）を選択し、指定期間のデータのみを表示できなければならない
+- **FR-006**: ユーザーはテクニカル指標のON/OFF切り替えをチェックボックスで操作し、リアルタイムにチャート表示を更新できなければならない
+- **FR-007**: システムは決算日・権利落ち日等のイベント情報を`data/events/corporate_events.json`から読み込み、チャート上にマーカー表示しなければならない
+- **FR-008**: システムは前日比±5%以上の価格変動を検出し、`data/alerts.json`に記録してダッシュボード上部にバナー表示しなければならない
+- **FR-009**: システムはGitHub Pagesにビルド成果物をデプロイし、静的Webサイトとして公開しなければならない
+- **FR-010**: システムはデータ更新失敗時、GitHub Issueを自動起票し、ラベル「data-failure」を付与しなければならない
+- **FR-011**: システムはすべてのCSV/JSONデータにスキーマバージョン情報を含め、`validate_data.py`でスキーマ検証を実行しなければならない
+- **FR-012**: システムはパフォーマンス基準（LCP < 2.5秒、TTI < 2.0秒、初期ロード < 500KB、チャート再描画 < 200ms）を満たさなければならない
 
 ### 主要エンティティ
 
@@ -151,7 +151,7 @@ Stooq (pandas_datareader) から9501.Tまたは9502.Tのデータを取得し、
 
 ---
 
-## 成功基準 *(必須)*
+## 成功基準
 
 ### 測定可能な成果
 
@@ -175,30 +175,32 @@ Stooq (pandas_datareader) から9501.Tまたは9502.Tのデータを取得し、
 
 ---
 
-## データフロー図
+## システムアーキテクチャ
+
+### データフロー図
 
 ```mermaid
 flowchart TB
     subgraph DataSources["データソース"]
-        API1[Stooq\npandas_datareader]
+        API1[Stooq<br/>pandas_datareader]
     end
     
-    subgraph GitHubActions["GitHub Actions\n毎時実行"]
-        F1[fetch_price_data.py\nデータ取得]
-        B1[build_indicators.py\n指標計算]
-        V1[validate_data.py\n検証]
+    subgraph GitHubActions["GitHub Actions<br/>定期実行"]
+        F1[fetch_price_data.py<br/>データ取得]
+        B1[build_indicators.py<br/>指標計算]
+        V1[validate_data.py<br/>検証]
     end
     
-    subgraph DataStorage["データストレージ\ndataディレクトリ"]
-        CSV1[price/9501.T.csv\nprice/9502.T.csv]
-        CSV3[indicators/9501.T_sma.csv\nindicators/9501.T_rsi.csv\n...]
+    subgraph DataStorage["データストレージ<br/>dataディレクトリ"]
+        CSV1[price/9501_T.csv<br/>price/9502_T.csv]
+        CSV3[indicators/*_sma.csv<br/>indicators/*_rsi.csv<br/>...]
         JSON1[events/corporate_events.json]
         JSON2[alerts.json]
     end
     
-    subgraph Frontend["フロントエンド\nReact + Recharts"]
-        H1[useMarketData.ts\nデータ読み込み]
-        C1[ChartCanvas.tsx\nチャート描画]
+    subgraph Frontend["フロントエンド<br/>React + Recharts"]
+        H1[useMarketData.ts<br/>データ読み込み]
+        C1[ChartCanvas.tsx<br/>チャート描画]
         P1[TechnicalPanel.tsx<br/>指標表示]
         A1[AlertBanner.tsx<br/>アラート表示]
     end
@@ -228,11 +230,11 @@ flowchart TB
 
 ```mermaid
 flowchart TB
-    M1[main] --> S1[001-marketvision-implementation<br/>仕様ブランチ]
+    M1[main] --> S1[001-MarketVision<br/>仕様ブランチ]
     S1 --> I1[feature/impl-001-data-fetch<br/>データ取得]
-    S1 --> I2[feature/impl-001-indicators-calculation<br/>テクニカル指標計算]
-    S1 --> I3[feature/impl-001-frontend-dashboard<br/>Reactダッシュボード]
-    S1 --> I4[feature/impl-001-github-actions<br/>CI/CD設定]
+    S1 --> I2[feature/impl-001-indicators<br/>テクニカル指標計算]
+    S1 --> I3[feature/impl-001-frontend<br/>Reactダッシュボード]
+    S1 --> I4[feature/impl-001-cicd<br/>CI/CD設定]
     
     I1 -->|PR| S1
     I2 -->|PR| S1
@@ -250,13 +252,13 @@ flowchart TB
 
 ---
 
-## 次のステップ
+## 関連ドキュメント
 
-1. `/speckit.clarify` - 本仕様書の明確化（必要に応じて）
-2. `/speckit.plan` - 技術選定と実装計画の策定
-3. `/speckit.tasks` - 実装タスクの分解とガントチャート作成
-4. `/speckit.checklist` - テスト計画チェックリストの生成
-5. `/speckit.implement` - 実装ブランチでのコード生成
+- **[プロジェクト憲法](https://github.com/J1921604/MarketVision/blob/main/.specify/memory/constitution.md)**: 開発原則とガバナンス
+- **[実装計画書](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/plan.md)**: 技術選定、アーキテクチャ設計
+- **[タスクリスト](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/tasks.md)**: 実装タスク一覧、ガントチャート
+- **[要件チェックリスト](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/checklists/requirements.md)**: 仕様品質検証
+- **[README](https://github.com/J1921604/MarketVision/blob/main/README.md)**: プロジェクト概要
 
 ---
 
