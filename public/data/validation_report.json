@@ -1,0 +1,65 @@
+{
+  "timestamp": "2025-11-29T18:40:00.266214",
+  "results": [
+    {
+      "file": "public\\data\\price\\9501.T.csv",
+      "type": "price",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "file": "public\\data\\indicators\\9501.T_sma.csv",
+      "type": "sma",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "file": "public\\data\\indicators\\9501.T_rsi.csv",
+      "type": "rsi",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "file": "public\\data\\indicators\\9501.T_macd.csv",
+      "type": "macd",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "file": "public\\data\\indicators\\9501.T_bb.csv",
+      "type": "bb",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "file": "public\\data\\price\\9502.T.csv",
+      "type": "price",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "file": "public\\data\\indicators\\9502.T_sma.csv",
+      "type": "sma",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "file": "public\\data\\indicators\\9502.T_rsi.csv",
+      "type": "rsi",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "file": "public\\data\\indicators\\9502.T_macd.csv",
+      "type": "macd",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "file": "public\\data\\indicators\\9502.T_bb.csv",
+      "type": "bb",
+      "valid": true,
+      "errors": []
+    }
+  ]
+}

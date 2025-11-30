@@ -1,50 +1,304 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# MarketVision プロジェクト憲法
 
-## Core Principles
+<!--
+同期影響レポート
+================
+バージョン変更: テンプレート → 1.0.0
+変更日: 2025-11-29
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+修正された原則:
+- すべての原則が新規追加（テンプレートから具体的な憲法に移行）
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+追加されたセクション:
+- コア原則（7原則）
+- セキュリティ要件
+- パフォーマンス基準
+- ブランチ戦略
+- 開発方針
+- ガバナンス
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+削除されたセクション:
+- なし（テンプレートのプレースホルダーを削除）
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+テンプレート更新状況:
+✅ plan-template.md: Constitution Check セクションとの整合性確認済み
+✅ spec-template.md: 優先度付けユーザーストーリーとの整合性確認済み
+✅ tasks-template.md: 原則駆動タスク分類との整合性確認済み
+✅ 関連ドキュメント: plan.md, spec.md, tasks.md の参照確認済み
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+フォローアップ TODO:
+- なし（すべてのプレースホルダーが具体的な値で置換済み）
+-->
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## コア原則
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### I. テスト駆動開発の徹底
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+**原則**:
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+- すべての機能は、仕様に対する検証テストを伴わなければならない
+- テストは実装前に記述し、失敗することを確認する（Red-Green-Refactorサイクル）
+- ユニットテスト、統合テスト、E2Eテストのカバレッジは80%以上を維持する
+- テストコードはPRテンプレートの必須チェック項目とする
 
-## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+**根拠**:
+テスト駆動開発により、仕様と実装の乖離を早期に検知し、リグレッションを防止する。また、テストが存在することで、リファクタリングやメンテナンスが容易になり、長期的なコード品質を保証する。
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+---
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+### II. セキュリティ最優先
+
+**原則**:
+
+- セキュリティ要件は機能要件より優先される
+- 機密データ（APIキー、認証トークン、個人情報）の平文保存を禁止する
+- すべての機密データは暗号化またはハッシュ化を必須とする
+- コミット前に `git-secrets` などのツールでスキャンを実行する
+- エラーログに機密情報を含めない設計とする
+
+**根拠**:
+セキュリティ侵害は、ユーザーの信頼を失うだけでなく、法的責任を伴う重大な問題である。機密データの漏洩は、一度発生すると取り返しがつかないため、予防を最優先とする。
+
+---
+
+### III. パフォーマンス基準の定量化
+
+**原則**:
+
+- すべてのパフォーマンス要件は定量化され、受入基準に組み込まれる
+- LCP（Largest Contentful Paint）< 2.5秒、TTI（Time to Interactive）< 2.0秒を維持する
+- 初期バンドルサイズはgzip後200KB未満とする
+- チャート再描画は200ms未満で完了する
+- Lighthouse CIでビルドごとにパフォーマンススコア90以上を必須とする
+
+**根拠**:
+定量的な基準がなければ、パフォーマンスの劣化を検知できない。ユーザー体験は応答速度に大きく依存するため、明確な閾値を設定し、継続的に監視することで、品質を保証する。
+
+---
+
+### IV. データ品質の保証
+
+**原則**:
+
+- すべてのCSV/JSONデータにスキーマバージョン情報を含める
+- データ更新後に `validate_data.py` でスキーマ検証を必須実行する
+- 異常値（株価0円以下、前日比500%超）を検出し、アラートを発行する
+- データ異常時はデプロイを中止し、前回の正常データを維持する
+- データ品質レポートを週次で自動生成し、レビューを実施する
+
+**根拠**:
+不正確なデータは、誤った投資判断を引き起こす重大なリスクである。データ品質を継続的に検証することで、ユーザーの信頼を維持し、システムの信頼性を確保する。
+
+---
+
+### V. API利用規約の遵守
+
+**原則**:
+
+- 外部APIの利用規約を厳守し、過度なリクエストを避ける
+- エラー時の最大リトライ回数は3回（指数バックオフ）とする
+- Stooq（pandas_datareader）の利用は、GitHub Actionsでの定期実行のみとする
+- レート制限を超えないよう、実行頻度を管理する
+
+**根拠**:
+外部APIの利用規約違反は、アクセス停止やサービス全体の停止につながる。また、過度なリクエストは、APIプロバイダーのインフラに負荷をかけ、他のユーザーにも影響を与えるため、責任ある利用が必要である。
+
+---
+
+### VI. 外部依存のバージョン固定
+
+**原則**:
+
+- すべての外部依存（npm、pip）はバージョンを固定する
+- package.jsonおよびrequirements.txtで厳密なバージョン指定を行う
+- バージョン更新時は、テストを実行し、互換性を確認する
+- 依存関係の脆弱性スキャンを定期的に実行する
+
+**根拠**:
+バージョン固定により、ビルドの再現性を確保し、予期しない依存関係の変更による障害を防止する。また、脆弱性が発見された場合でも、影響範囲を特定しやすくなる。
+
+---
+
+### VII. 仕様と実装の分離
+
+**原則**:
+
+- 仕様ブランチ（`###-feature-name`）と実装ブランチ（`feature/impl-###-feature-name`）を明確に分離する
+- 仕様ブランチは、仕様書、計画書、タスクリストのみを含む
+- 実装ブランチは、ソースコード、テスト、設定ファイルを含む
+- レビューで仕様と実装の乖離を検知し、是正する
+
+**根拠**:
+仕様と実装を分離することで、仕様の変更が実装に直接影響することを防ぎ、仕様の意図を明確に保つ。また、レビュー時に仕様と実装を対比することで、乖離を早期に検知できる。
+
+---
+
+## セキュリティ要件
+
+### 機密データの保護
+
+- `.env.local` ファイルは `.gitignore` で除外し、Gitリポジトリにコミットしない
+- 環境変数は、GitHub Secrets または環境変数管理ツールで管理する
+- APIキー、データベース認証情報は、暗号化されたストレージに保存する
+- コードレビューで、機密情報のハードコーディングをチェックする
+
+### エラーログのサニタイズ
+
+- エラーメッセージに、ユーザーの個人情報、APIキー、内部パスを含めない
+- デバッグ情報は、開発環境でのみ出力し、本番環境では無効化する
+- ログは、ローカルストレージまたはセキュアなログ管理サービスに保存する
+
+---
+
+## パフォーマンス基準
+
+### フロントエンド
+
+- **LCP（Largest Contentful Paint）**: 2.5秒未満
+- **TTI（Time to Interactive）**: 2.0秒未満
+- **初期バンドルサイズ**: gzip後200KB未満
+- **チャート再描画**: 200ms未満
+- **Lighthouseスコア**: 90以上（ビルドごとに測定）
+
+### バックエンド（データ処理）
+
+- **データ取得（2銘柄）**: 60秒未満
+- **テクニカル指標計算（全指標）**: 10秒未満
+- **データ検証**: 5秒未満
+
+### 検証方法
+
+- Lighthouse CIをGitHub Actionsに統合し、ビルドごとに自動測定
+- パフォーマンス基準未達成のPRはマージを拒否する
+- 週次でパフォーマンスレポートを生成し、レビューを実施する
+
+---
+
+## ブランチ戦略
+
+### 作業順序
+
+1. 憲法の確認（constitution.md）
+2. 仕様書の作成（spec.md）
+3. 実装計画の策定（plan.md）
+4. タスクリストの作成（tasks.md）
+5. 検証とテストの実施
+6. 実装とコード作成
+7. レビューとマージ
+
+### 仕様ブランチ（mainブランチから派生）
+
+```bash
+git checkout main
+git checkout -b <番号>-<短い名前>
+# 例: git checkout -b 001-marketvision-implementation
+```
+
+仕様ブランチには、以下のファイルのみを含む:
+
+- `specs/<番号>-<短い名前>/spec.md`
+- `specs/<番号>-<短い名前>/plan.md`
+- `specs/<番号>-<短い名前>/tasks.md`
+- `specs/<番号>-<短い名前>/research.md`（Phase 0の成果物）
+- `specs/<番号>-<短い名前>/data-model.md`（Phase 1の成果物）
+- `specs/<番号>-<短い名前>/quickstart.md`（Phase 1の成果物）
+- `specs/<番号>-<短い名前>/contracts/`（Phase 1の成果物）
+
+### 実装ブランチ（仕様ブランチから派生）
+
+```bash
+git checkout 001-<topic>
+git checkout -b feature/impl-<番号>-<短い名前>
+# 例: git checkout -b feature/impl-001-data-fetch
+```
+
+実装ブランチには、以下のファイルを含む:
+
+- ソースコード（`src/`、`scripts/`など）
+- テストコード（`tests/`）
+- 設定ファイル（`package.json`、`vite.config.ts`など）
+- CI/CD設定（`.github/workflows/`）
+
+### マージとレビュー
+
+- 実装ブランチは、仕様ブランチにマージする（PRレビュー必須）
+- 仕様ブランチは、mainブランチにマージする（最終PRレビュー必須）
+- 重大変更（破壊的変更、セキュリティ修正、パフォーマンス低下）には、複数人のレビュー承認を必須とする
+
+---
+
+## 開発方針
+
+### 同時起動とローカル検証
+
+- フロントエンドとバックエンドを同時に起動するスクリプトを生成する
+- ローカル環境で、正常に動作するまで繰り返し検証し、エラー修正を完了する
+- デプロイ前に、ビルドとプレビューをローカルで検証し、テストが100%正常に動作することを確認する
+
+### Mermaid図の挿入
+
+- フローチャート、シーケンス図、状態遷移図などをMermaid v11準拠で挿入する
+
+#### Mermaid v11対応のベストプラクティス
+
+1. **gitGraph使用時の注意**:
+
+   - 日本語を避けるか、flowchart/graph形式を使用する
+   - `tag:` 構文は非推奨、代わりにノードで表現する
+   - `${{}}` などの特殊文字をノードラベルに使用しない
+2. **日本語対応**:
+
+   - `flowchart`、`graph`、`sequenceDiagram` は日本語完全対応
+   - ノードラベル、エッジラベル、Noteで日本語使用可能
+   - `gitGraph` 構文は日本語コミットメッセージに対応していない
+3. **推奨構文**:
+
+   - ブランチ戦略: `flowchart TB` + `subgraph`
+   - プロセスフロー: `flowchart TD/LR`
+   - 時系列: `sequenceDiagram`
+   - 状態遷移: `stateDiagram-v2`
+
+### モックデータの制限
+
+- 全モックデータの作成は行わない
+- ローカル検証は、過去10年のStooq（pandas_datareader）API実データを取得し、Playwrightテストで検証する
+
+### ガントチャートのスケジュール管理
+
+- `tasks.md` のガントチャートは、2025-12-15開始とする
+- 土日、年末年始、祝日を考慮したスケジュールとする
+- 任意に開始日を変更できる相対日付方式に修正する（ただし、自動再計算はされない）
+
+---
+
+## ガバナンス
+
+### 憲法の優先順位
+
+- 本憲法は、すべての開発プラクティスに優先される
+- 憲法の原則に違反する実装は、レビューで拒否される
+- 憲法の改正には、文書化、承認、移行計画が必要である
+
+### 改正手順
+
+1. 改正提案を Issue として起票する
+2. 改正理由、影響範囲、移行計画を明記する
+3. レビュー承認後、憲法バージョンを更新する
+4. 関連ドキュメント（plan.md、spec.md、tasks.md、テンプレートファイル）を更新する
+5. 改正内容をチーム全体に通知する
+
+### コンプライアンスレビュー
+
+- すべてのPR/レビューは、憲法への準拠を検証する
+- 憲法違反が発見された場合、修正またはClarification（憲法改正）を実施する
+- 複雑性の導入には、正当化理由を `plan.md` の「Complexity Tracking」セクションに記述する
+
+### ランタイム開発ガイダンス
+
+- 日常的な開発作業では、本憲法を参照し、原則に従う
+- 不明点がある場合は、仕様書（spec.md）、実装計画（plan.md）、タスクリスト（tasks.md）を参照する
+- エージェント（Copilot、Claude等）による開発も、本憲法の原則に従う
+
+---
+
+**バージョン**: 1.0.0 | **制定日**: 2025-12-15
