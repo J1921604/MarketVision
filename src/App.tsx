@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useMarketData } from './hooks/useMarketData';
 import { ChartCanvas } from './components/ChartCanvas';
 import { TechnicalPanel } from './components/TechnicalPanel';
@@ -9,6 +9,7 @@ import type { Symbol, PeriodFilter } from './types';
 function App() {
   const [symbol, setSymbol] = useState<Symbol>('9501.T');
   const [period, setPeriod] = useState<PeriodFilter>('1Y');
+  const [lastUpdate, setLastUpdate] = useState<string>('-');
   
   // テクニカル指標表示フラグ
   const [showSMA5, setShowSMA5] = useState(true);
@@ -20,6 +21,14 @@ function App() {
   const [showBB, setShowBB] = useState(false);
 
   const { filteredData, loading, error } = useMarketData(symbol, period);
+
+  // 最終更新日時を設定
+  useEffect(() => {
+    if (filteredData && filteredData.price.length > 0) {
+      const latestDate = filteredData.price[filteredData.price.length - 1].date;
+      setLastUpdate(latestDate);
+    }
+  }, [filteredData]);
 
   const periods: PeriodFilter[] = ['1M', '3M', '6M', '1Y', '3Y', '5Y'];
   const periodLabels: Record<PeriodFilter, string> = {
@@ -170,6 +179,9 @@ function App() {
 
         {/* フッター */}
         <footer className="text-center text-fg/50 text-sm mt-12">
+          <div className="update-info mb-4">
+            最終更新: <span id="last-update">{lastUpdate}</span> | 次回更新予定: 毎日 07:00 (日本時間)
+          </div>
           <p>&copy; 2025 MarketVision | Version 1.0.0</p>
           <p className="mt-2">
             Data provided by Stooq via pandas_datareader

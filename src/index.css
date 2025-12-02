@@ -73,11 +73,19 @@ body {
 .title {
   font-size: 2.5rem;
   font-weight: bold;
-  background: linear-gradient(45deg, #00ffff, #00ff88, #ff00ff);
+  /* グリーン→マゼンタへ滑らかに遷移 */
+  background: linear-gradient(45deg,
+    var(--neon-green) 0%,
+    var(--magenta) 100%);
   -webkit-background-clip: text;
+  background-clip: text;    /* Firefox 用フォールバック */
+  color: transparent;       /* 非 WebKit 向け互換設定 */
   -webkit-text-fill-color: transparent;
   margin-bottom: 10px;
-  text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+  /* 両端色を反映する発光を軽めに追加 */
+  text-shadow:
+    0 0 12px rgba(0, 212, 255, 0.18),
+    0 0 24px rgba(255, 46, 204, 0.14);
 }
 
 /* スクロールバー */
@@ -97,4 +105,15 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--neon-green);
+}
+
+/* 更新情報 */
+.update-info {
+  color: var(--fg);
+  font-size: 0.9rem;
+}
+
+.update-info span {
+  color: var(--cyan);
+  font-weight: bold;
 }

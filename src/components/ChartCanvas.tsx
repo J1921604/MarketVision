@@ -221,14 +221,26 @@ export function ChartCanvas({
             />
           )}
           <Tooltip
-            contentStyle={{ backgroundColor: '#1f2937', border: '1px solid #374151' }}
-            labelStyle={{ color: '#f3f4f6' }}
-            itemStyle={{ color: '#f3f4f6' }}
-            formatter={(value: number, name: string) => {
-              if (name === 'volume') return [formatVolume(value), '出来高'];
-              return [formatPrice(value), name];
+            content={({ active, payload, label }) => {
+              if (!active || !payload || payload.length === 0) return null;
+              const data = payload[0].payload as ChartDataPoint;
+              return (
+                <div style={{ backgroundColor: '#1f2937', border: '1px solid #374151', padding: '10px', borderRadius: '4px' }}>
+                  <p style={{ color: '#f3f4f6', margin: '0 0 8px 0', fontWeight: 'bold' }}>{formatDate(label)}</p>
+                  <p style={{ color: '#f3f4f6', margin: '4px 0' }}>始値: {formatPrice(data.open)}</p>
+                  <p style={{ color: '#f3f4f6', margin: '4px 0' }}>高値: {formatPrice(data.high)}</p>
+                  <p style={{ color: '#f3f4f6', margin: '4px 0' }}>安値: {formatPrice(data.low)}</p>
+                  <p style={{ color: '#f3f4f6', margin: '4px 0' }}>終値: {formatPrice(data.close)}</p>
+                  {showSMA5 && data.sma5 && <p style={{ color: '#3b82f6', margin: '4px 0' }}>SMA5: {formatPrice(data.sma5)}</p>}
+                  {showSMA25 && data.sma25 && <p style={{ color: '#f59e0b', margin: '4px 0' }}>SMA25: {formatPrice(data.sma25)}</p>}
+                  {showSMA50 && data.sma50 && <p style={{ color: '#10b981', margin: '4px 0' }}>SMA50: {formatPrice(data.sma50)}</p>}
+                  {showSMA75 && data.sma75 && <p style={{ color: '#8b5cf6', margin: '4px 0' }}>SMA75: {formatPrice(data.sma75)}</p>}
+                  {showBB && data.bb_upper && <p style={{ color: '#facc15', margin: '4px 0' }}>BB上限: {formatPrice(data.bb_upper)}</p>}
+                  {showBB && data.bb_middle && <p style={{ color: '#facc15', margin: '4px 0' }}>BB中央: {formatPrice(data.bb_middle)}</p>}
+                  {showBB && data.bb_lower && <p style={{ color: '#facc15', margin: '4px 0' }}>BB下限: {formatPrice(data.bb_lower)}</p>}
+                </div>
+              );
             }}
-            labelFormatter={formatDate}
           />
           <Legend wrapperStyle={{ color: '#f3f4f6' }} />
 
