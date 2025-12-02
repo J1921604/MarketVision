@@ -1,7 +1,7 @@
 # 仕様品質チェックリスト: MarketVision 株価テクニカル分析ダッシュボード
 
 **目的**: 仕様の完全性と品質を検証し、実装前にすべての要件が明確化されていることを確認する  
-**作成日**: 2025-11-29  
+**作成日**: 2025-12-15  
 **機能**: [spec.md](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/spec.md)
 
 ---
@@ -189,5 +189,5 @@
 ---
 
 **Version**: 1.0.0  
-**Last Updated**: 2025-11-29  
+**Last Updated**: 2025-12-15  
 **Repository**: https://github.com/J1921604/MarketVision

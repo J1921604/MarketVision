@@ -37,13 +37,13 @@ cd MarketVision
 npm install
 
 # Python依存関係のインストール
-pip install -r scripts/requirements.txt
+py -3.10 -m pip install -r scripts/requirements.txt
 
 # 株価データの取得（初回のみ、public/data/price/に保存）
-python scripts/fetch_price_data.py --symbols "9501.T,9502.T" --output public/data/price
+py -3.10 scripts/fetch_price_data.py --symbols "9501.T,9502.T" --output public/data/price
 
 # テクニカル指標の計算（初回のみ、public/data/indicators/に保存）
-python scripts/build_indicators.py --symbols "9501.T,9502.T" --input public/data/price --output public/data/indicators
+py -3.10 scripts/build_indicators.py --symbols "9501.T,9502.T" --input public/data/price --output public/data/indicators
 
 # 開発サーバーの起動
 npm run dev
@@ -76,7 +76,7 @@ npm run dev
 実データを取得するには：
 
 ```powershell
-python scripts/fetch_price_data.py
+py -3.10 scripts/fetch_price_data.py
 ```
 
 ---
@@ -96,13 +96,13 @@ node --version  # 20.x以上を確認
 
 ---
 
-### 問題2: `python` コマンドが見つからない
+### 問題2: `py` コマンドが見つからない
 
 **原因**: Pythonがインストールされていない、またはPATHが通っていない
 
 **解決**:
 ```powershell
-python --version  # 3.11以上を確認
+py --version  # 3.11以上を確認
 ```
 
 PATHが通っていない場合：
@@ -137,7 +137,7 @@ taskkill /PID <PID> /F
 **解決**:
 ```powershell
 # リトライ（最大3回）
-python scripts/fetch_price_data.py --symbols "9501.T,9502.T" --years 10
+py -3.10 scripts/fetch_price_data.py --symbols "9501.T,9502.T" --years 10
 ```
 
 3回失敗する場合、GitHub Issueを確認してください。
@@ -216,10 +216,10 @@ npm run preview
 
 ### Q1: データ更新の頻度は？
 
-**A**: GitHub Actionsで6時間ごとに自動更新されます。手動更新も可能です：
+**A**: GitHub Actionsで毎日17:00 JSTに自動更新されます。手動更新も可能です：
 
 ```powershell
-python scripts/fetch_price_data.py
+py -3.10 scripts/fetch_price_data.py
 ```
 
 ### Q2: テクニカル指標の計算方法は？

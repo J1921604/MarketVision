@@ -1,7 +1,7 @@
 # 機能仕様書: MarketVision 株価テクニカル分析ダッシュボード
 
 **Feature Branch**: `001-MarketVision`  
-**Created**: 2025-11-29  
+**Created**: 2025-12-15  
 **Status**: Draft  
 **Version**: 1.0.0  
 **Input**: MarketVision株価テクニカル分析ダッシュボードの実装

@@ -2,6 +2,7 @@
 """
 MarketVision - Stock Price Data Fetcher
 Stooq経由でpandas_datareaderを使用して株価データを取得
+毎日JST17時に保存されていない日の株価のみ取得するロジック
 """
 
 import argparse
@@ -18,20 +19,60 @@ except ImportError:
     sys.exit(1)
 
 
-def fetch_stock_data(symbol: str, start_date: str, end_date: str, output_dir: Path) -> bool:
+def get_existing_dates(csv_path: Path) -> set:
+    """
+    既存CSVファイルから保存済みの日付セットを取得
+    
+    Args:
+        csv_path: CSVファイルのパス
+        
+    Returns:
+        保存済み日付のセット（YYYY-MM-DD形式の文字列）
+    """
+    if not csv_path.exists():
+        return set()
+    
+    try:
+        # スキーマバージョン行をスキップして読み込み
+        df = pd.read_csv(csv_path, comment='#')
+        if 'Date' in df.columns:
+            dates = pd.to_datetime(df['Date']).dt.strftime('%Y-%m-%d').tolist()
+            return set(dates)
+        return set()
+    except Exception as e:
+        print(f"[WARNING] 既存ファイル読み込みエラー: {str(e)}")
+        return set()
+
+
+def fetch_stock_data(symbol: str, start_date: str, end_date: str, output_dir: Path, incremental: bool = True) -> bool:
     """
     指定された銘柄の株価データを取得してCSVに保存
+    incrementalモード時は既存データと統合し、未保存の日付のみ取得
     
     Args:
         symbol: 銘柄コード (例: 9501.T)
         start_date: 開始日 (YYYY-MM-DD)
         end_date: 終了日 (YYYY-MM-DD)
         output_dir: 出力ディレクトリ
+        incremental: 増分モード（既存データに追加）
         
     Returns:
         成功時True、失敗時False
     """
     try:
+        # ファイル名を生成（9501.T.csv）
+        filename = f"{symbol}.csv"
+        output_path = output_dir / filename
+        
+        # 既存データの日付を取得
+        existing_dates = get_existing_dates(output_path) if incremental else set()
+        
+        if existing_dates:
+            print(f"[INFO] {symbol} の既存データ: {len(existing_dates)} 日分")
+            # 最新の保存済み日付を確認
+            latest_date = max(existing_dates)
+            print(f"       最新保存日: {latest_date}")
+        
         print(f"[INFO] {symbol} のデータを取得中...")
         print(f"       期間: {start_date} ～ {end_date}")
         print(f"       データソース: Stooq")
@@ -74,12 +115,30 @@ def fetch_stock_data(symbol: str, start_date: str, end_date: str, output_dir: Pa
         # 銘柄コード列を追加
         df['symbol'] = symbol
         
-        # 日付でソート（昇順）
-        df.sort_values('Date', inplace=True)
+        # 日付を文字列に変換
+        df['Date'] = pd.to_datetime(df['Date']).dt.strftime('%Y-%m-%d')
         
-        # ファイル名を生成（9501.T.csv）
-        filename = f"{symbol}.csv"
-        output_path = output_dir / filename
+        # 増分モード: 既存データと統合
+        if incremental and existing_dates:
+            # 新規データのみフィルタ
+            new_df = df[~df['Date'].isin(existing_dates)]
+            
+            if new_df.empty:
+                print(f"[INFO] {symbol} の新規データなし（既に最新）")
+                return True
+            
+            print(f"[INFO] {symbol} の新規データ: {len(new_df)} 日分")
+            
+            # 既存データを読み込み
+            existing_df = pd.read_csv(output_path, comment='#')
+            
+            # 新旧データを結合
+            df = pd.concat([existing_df, new_df], ignore_index=True)
+        
+        # 日付でソート（昇順）
+        df['Date'] = pd.to_datetime(df['Date'])
+        df.sort_values('Date', inplace=True)
+        df['Date'] = df['Date'].dt.strftime('%Y-%m-%d')
         
         # 出力ディレクトリを作成
         output_dir.mkdir(parents=True, exist_ok=True)
@@ -90,6 +149,8 @@ def fetch_stock_data(symbol: str, start_date: str, end_date: str, output_dir: Pa
             df.to_csv(f, index=False)
         
         print(f"[SUCCESS] {len(df)} 行のデータを保存: {output_path}")
+        if incremental and existing_dates:
+            print(f"          新規追加: {len(df) - len(existing_dates)} 行")
         return True
         
     except Exception as e:
@@ -119,8 +180,22 @@ def main():
         default='data/price',
         help='出力ディレクトリ'
     )
+    parser.add_argument(
+        '--incremental',
+        action='store_true',
+        default=True,
+        help='増分モード（既存データに追加、デフォルト: 有効）'
+    )
+    parser.add_argument(
+        '--full',
+        action='store_true',
+        help='全データを再取得（既存データを上書き）'
+    )
     
     args = parser.parse_args()
+    
+    # 増分モードの決定（--fullが指定されていない場合は増分モード）
+    incremental = not args.full
     
     # 日付範囲を計算
     end_date = datetime.now()
@@ -135,6 +210,7 @@ def main():
     print(f"銘柄数: {len(symbols)}")
     print(f"期間: {start_date.strftime('%Y-%m-%d')} ～ {end_date.strftime('%Y-%m-%d')}")
     print(f"出力先: {output_dir}")
+    print(f"モード: {'増分（新規データのみ追加）' if incremental else '全体（既存データ上書き）'}")
     print("=" * 60)
     print()
     
@@ -146,7 +222,8 @@ def main():
             symbol,
             start_date.strftime('%Y-%m-%d'),
             end_date.strftime('%Y-%m-%d'),
-            output_dir
+            output_dir,
+            incremental
         ):
             success_count += 1
         print()

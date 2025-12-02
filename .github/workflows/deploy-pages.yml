@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+  schedule:
+    - cron: '0 8 * * *'
   workflow_dispatch:
 
 permissions:
@@ -39,7 +41,7 @@ jobs:
         run: npm ci
 
       - name: Install Python dependencies
-        run: pip install pandas pandas_datareader numpy
+        run: pip install -r scripts/requirements.txt
 
       - name: Create data directories
         run: |
@@ -48,7 +50,7 @@ jobs:
 
       - name: Fetch stock data from Stooq
         run: |
-          python scripts/fetch_price_data.py --symbols "9501.T,9502.T" --output public/data/price
+          python scripts/fetch_price_data.py --symbols "9501.T,9502.T" --output public/data/price --incremental
         continue-on-error: true
 
       - name: Calculate technical indicators

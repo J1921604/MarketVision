@@ -215,7 +215,7 @@ on:
   push:
     branches: [main]
   schedule:
-    - cron: '0 */6 * * *'  # 6時間ごとにデータ更新
+    - cron: '0 8 * * *'  # 毎日17:00 JSTにデータ更新
 
 jobs:
   fetch-data:

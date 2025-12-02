@@ -10,8 +10,8 @@ npm install
 pip install -r scripts/requirements.txt
 
 # データ取得と指標計算
-python scripts/fetch_price_data.py --symbols "9501.T,9502.T" --output public/data/price
-python scripts/build_indicators.py --symbols "9501.T,9502.T" --input public/data/price --output public/data/indicators
+py -3.10 scripts/fetch_price_data.py --symbols "9501.T,9502.T" --output public/data/price
+py -3.10 scripts/build_indicators.py --symbols "9501.T,9502.T" --input public/data/price --output public/data/indicators
 
 # 開発サーバー起動
 npm run dev
@@ -27,7 +27,7 @@ npm run dev
 ### プロジェクトドキュメント
 
 - **[プロジェクト憲法](https://github.com/J1921604/MarketVision/blob/main/.specify/memory/constitution.md)**: 開発原則とガバナンス（7つのコア原則）
-- **[機能仕様書](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/spec.md)**: ユーザーストーリー、機能要件、成功基準
+- **[機能仕様書](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/spec.md)**: ユーザーストーリー、機能要件、成功基準
 - **[実装計画書](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/plan.md)**: 技術選定、アーキテクチャ設計、Constitution Check
 - **[タスクリスト](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/tasks.md)**: 実装タスク一覧、ガントチャート
 - **[技術調査](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/research.md)**: 技術選定の根拠、代替案評価
@@ -155,8 +155,8 @@ npm install
 pip install -r scripts/requirements.txt
 
 # データ取得と指標計算
-python scripts/fetch_price_data.py --symbols "9501.T,9502.T" --output public/data/price
-python scripts/build_indicators.py --symbols "9501.T,9502.T" --input public/data/price --output public/data/indicators
+py -3.10 scripts/fetch_price_data.py --symbols "9501.T,9502.T" --output public/data/price
+py -3.10 scripts/build_indicators.py --symbols "9501.T,9502.T" --input public/data/price --output public/data/indicators
 
 # 開発サーバー起動
 npm run dev
@@ -186,7 +186,7 @@ pip install -r scripts/requirements.txt
 #### 3. 株価データの取得
 
 ```powershell
-python scripts/fetch_price_data.py --symbols "9501.T,9502.T" --years 10
+py -3.10 scripts/fetch_price_data.py --symbols "9501.T,9502.T" --years 10
 ```
 
 過去10年分のデータを `data/price/` に保存します。
@@ -273,7 +273,7 @@ JWTベースの認証システムをリフレッシュトークン付きで実�
 ### 作業順序
 
 1. 憲法の確認（[constitution.md](https://github.com/J1921604/MarketVision/blob/main/.specify/memory/constitution.md)）
-2. 仕様書の作成（[spec.md](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/spec.md)）
+2. 仕様書の作成（[spec.md](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/spec.md)）
 3. 実装計画の策定（[plan.md](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/plan.md)）
 4. タスクリストの作成（[tasks.md](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/tasks.md)）
 5. 検証とテストの実施
@@ -311,6 +311,9 @@ npm run test:e2e:headless
 ### GitHub Pagesへの自動デプロイ
 
 `main`ブランチにpushすると、GitHub Actionsが自動的にビルド・デプロイします。
+
+- **定期スケジュール**: 毎日 17:00 JST（UTC 08:00）に Stooq データ取得→ビルド→デプロイを実行
+- **データ取得コマンド**: `py -3.10 -m pip install -r scripts/requirements.txt` 実行後に `py -3.10 scripts/fetch_price_data.py` / `py -3.10 scripts/build_indicators.py`
 
 ```powershell
 # 実装ブランチで作業

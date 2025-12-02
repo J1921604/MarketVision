@@ -6,8 +6,9 @@ test.describe('MarketVision E2E Tests', () => {
   });
 
   test('ページが正しく読み込まれること', async ({ page }) => {
-    // タイトル確認
-    await expect(page.locator('h1')).toContainText('MarketVision');
+    // タイトル確認（スタイルクラス含む）
+    const headerTitle = page.locator('header.header .title');
+    await expect(headerTitle).toContainText('MarketVision');
     
     // 銘柄選択ボタン確認
     await expect(page.getByRole('button', { name: /東京電力HD/ })).toBeVisible();
@@ -25,18 +26,20 @@ test.describe('MarketVision E2E Tests', () => {
   });
 
   test('期間フィルタが動作すること', async ({ page }) => {
-    const periods = ['1M', '3M', '6M', '1Y', '3Y', '5Y'];
-    
-    for (const period of periods) {
-      await page.getByRole('button', { name: period, exact: true }).click();
-      await expect(page.getByRole('button', { name: period, exact: true })).toHaveClass(/border-neon-green/);
+    const periodLabels = ['1か月', '3か月', '6か月', '1年', '3年', '5年'];
+
+    for (const label of periodLabels) {
+      const button = page.getByRole('button', { name: label, exact: true });
+      await button.click();
+      await expect(button).toHaveClass(/border-neon-green/);
     }
   });
 
   test('テクニカル指標パネルが表示されること', async ({ page }) => {
-    await expect(page.locator('text=テクニカル指標')).toBeVisible();
-    await expect(page.getByText('SMA5 (短期)')).toBeVisible();
-    await expect(page.getByText('SMA25 (中期)')).toBeVisible();
+    await expect(page.getByRole('heading', { name: '移動平均線' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'オシレーター & バンド' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'SMA5 (5日)' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'SMA25 (25日)' })).toBeVisible();
     await expect(page.getByRole('button', { name: /RSI/ })).toBeVisible();
     await expect(page.getByRole('button', { name: /MACD/ })).toBeVisible();
     await expect(page.getByRole('button', { name: /ボリンジャーバンド/ })).toBeVisible();

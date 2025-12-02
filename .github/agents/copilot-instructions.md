@@ -1,6 +1,6 @@
 ﻿# MarketVision Development Guidelines
 
-Auto-generated from all feature plans. Last updated: 2025-11-29
+Auto-generated from all feature plans. Last updated: 2025-12-15
 
 ## Active Technologies
 

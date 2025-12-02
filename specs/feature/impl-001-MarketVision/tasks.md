@@ -1,6 +1,6 @@
 # Tasks: MarketVision 株価テクニカル分析ダッシュボード
 
-**Input**: [plan.md](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/plan.md), [spec.md](https://github.com/J1921604/MarketVision/blob/main/AI_input/spec.md), [data-model.md](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/data-model.md), [contracts/](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/contracts/)  
+**Input**: [plan.md](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/plan.md), [spec.md](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/spec.md), [data-model.md](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/data-model.md), [contracts/](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/contracts/)  
 **Version**: 1.0.0  
 **Last Updated**: 2025-12-15  
 **Repository**: https://github.com/J1921604/MarketVision
@@ -62,7 +62,7 @@
 
 - [x] T013 [P] [US1] Implement fetch_price_data.py in scripts/ (Stooq経由で9501.T/9502.Tデータ取得、CSV保存 public/data/price/{symbol}.csv)
 - [x] T014 [P] [US1] Implement validate_data.py in scripts/ (PriceData スキーマ検証、異常値検出、前日比±50%チェック)
-- [ ] T015 [US1] Test data fetch locally (python scripts/fetch_price_data.py --symbols "9501.T,9502.T" --output public/data/price)
+- [ ] T015 [US1] Test data fetch locally (py -3.10 scripts/fetch_price_data.py --symbols "9501.T,9502.T" --output public/data/price)
 
 ### フロントエンド実装
 
@@ -96,7 +96,7 @@
 - [x] T027 [P] [US2] Add MACD calculation function in build_indicators.py (12/26 EMA、9日シグナル、ヒストグラム)
 - [x] T028 [P] [US2] Add Bollinger Bands calculation in build_indicators.py (20日SMA±2σ、上限>=中央>=下限検証)
 - [x] T029 [US2] Update validate_data.py (IndicatorData スキーマ検証、SMA非負、RSI 0-100、MACD整合性チェック)
-- [ ] T030 [US2] Test indicator calculation locally (python scripts/build_indicators.py --symbols "9501.T,9502.T" --input public/data/price --output public/data/indicators)
+- [ ] T030 [US2] Test indicator calculation locally (py -3.10 scripts/build_indicators.py --symbols "9501.T,9502.T" --input public/data/price --output public/data/indicators)
 
 ### フロントエンド実装
 

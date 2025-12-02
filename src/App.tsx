@@ -55,10 +55,8 @@ function App() {
   return (
     <div className="min-h-screen bg-bg p-4 md:p-8">
       {/* ヘッダー */}
-      <header className="mb-8">
-        <h1 className="text-4xl md:text-5xl font-bold text-center neon-glow mb-2">
-          株価テクニカル分析ダッシュボード
-        </h1>
+      <header className="header">
+        <h1 className="title">株価テクニカル分析ダッシュボード - MarketVision</h1>
       </header>
 
       {/* メインコンテンツ */}
