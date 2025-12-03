@@ -96,9 +96,9 @@ export function ChartCanvas({
     return `${date.getMonth() + 1}/${date.getDate()}`;
   };
 
-  // 価格フォーマット（千円単位でカンマ区切り）
+  // 価格フォーマット（整数、カンマ区切り）
   const formatPrice = (value: number) => {
-    return `¥${value.toLocaleString('ja-JP', { minimumFractionDigits: 0 })}`;
+    return `¥${Math.round(value).toLocaleString('ja-JP')}`;
   };
 
   // 出来高フォーマット（百万株単位）

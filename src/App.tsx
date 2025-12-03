@@ -26,7 +26,9 @@ function App() {
   useEffect(() => {
     if (filteredData && filteredData.price.length > 0) {
       const latestDate = filteredData.price[filteredData.price.length - 1].date;
-      setLastUpdate(latestDate);
+      const now = new Date();
+      const formattedDateTime = `${latestDate} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+      setLastUpdate(formattedDateTime);
     }
   }, [filteredData]);
 

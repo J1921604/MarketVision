@@ -640,10 +640,10 @@ GitHub Pagesデプロイ
 
 ## 📚 関連ドキュメント
 
-- [README.md](https://github.com/J1921604/Power-Demand-Forecast/blob/main/README.md) - プロジェクト概要
-- [完全仕様書.md](https://github.com/J1921604/Power-Demand-Forecast/blob/main/docs/完全仕様書.md) - 完全な仕様書
+- [README.md](https://github.com/J1921604/MarketVision/blob/main/README.md) - プロジェクト概要
+- [完全仕様書.md](https://github.com/J1921604/MarketVision/blob/main/docs/完全仕様書.md) - 完全な仕様書
 - [GitHub Pages 公式ドキュメント](https://docs.github.com/pages)
 - [GitHub Actions 公式ドキュメント](https://docs.github.com/actions)
-- [リポジトリ](https://github.com/J1921604/Power-Demand-Forecast)
+- [リポジトリ](https://github.com/J1921604/MarketVision)
 
 ---
