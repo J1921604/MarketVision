@@ -7,10 +7,10 @@
 ```powershell
 # 依存関係インストール
 npm install
-pip install -r scripts/requirements.txt
+py -3.10 -m pip install -r scripts/requirements.txt
 
-# データ取得と指標計算
-py -3.10 scripts/fetch_price_data.py --symbols "9501.T,9502.T" --output public/data/price
+# データ取得と指標計算（差分更新）
+py -3.10 scripts/fetch_price_data.py --symbols "9501.T,9502.T" --output public/data/price --incremental
 py -3.10 scripts/build_indicators.py --symbols "9501.T,9502.T" --input public/data/price --output public/data/indicators
 
 # 開発サーバー起動
@@ -81,7 +81,7 @@ npm run dev
 - **Tailwind CSS 3.4** (Cyberpunk Neumorphism デザイン)
 
 ### バックエンド（データ処理）
-- **Python 3.11**
+- **Python 3.10** (py -3.10で実行)
 - **pandas_datareader 0.10.0** (Stooq API 経由でデータ取得)
 - **pandas 2.1** / **numpy 1.26** (テクニカル指標計算)
 
@@ -145,7 +145,7 @@ MarketVision/
 
 ### 前提条件
 - **Node.js 20.x** 以上
-- **Python 3.11** 以上
+- **Python 3.10** (py -3.10で実行)
 - **PowerShell 5.1** 以上（Windowsの場合）
 
 ### クイックスタート（推奨）
@@ -317,7 +317,7 @@ npm run test:e2e:headless
 
 `main`ブランチにpushすると、GitHub Actionsが自動的にビルド・デプロイします。
 
-- **定期スケジュール**: 毎日 07:00 JST（UTC 22:00）に Stooq データ取得→ビルド→デプロイを実行
+- **定期スケジュール**: 毎日 JST 07:00 (UTC 22:00) に Stooq データ取得→ビルド→デプロイを実行
 - **差分更新ロジック**: `--incremental` フラグにより、保存済みの日付を除く新しいデータのみを取得
 - **ワークフロー**: [.github/workflows/deploy-pages.yml](https://github.com/J1921604/MarketVision/blob/main/.github/workflows/deploy-pages.yml)
 

@@ -132,13 +132,13 @@ pip install -r scripts/requirements.txt
 
 ```powershell
 # 株価データ取得（過去10年分）
-py scripts/fetch_price_data.py --symbols "9501.T,9502.T" --output public/data/price
+py -3.10 scripts/fetch_price_data.py --symbols "9501.T,9502.T" --output public/data/price
 
 # テクニカル指標計算
-py scripts/build_indicators.py --symbols "9501.T,9502.T" --input public/data/price --output public/data/indicators
+py -3.10 scripts/build_indicators.py --symbols "9501.T,9502.T" --input public/data/price --output public/data/indicators
 
 # データ検証
-py scripts/validate_data.py --input public/data
+py -3.10 scripts/validate_data.py --input public/data
 ```
 
 #### ステップ4: ローカルプレビュー
@@ -557,11 +557,11 @@ Get-ChildItem -Recurse public/data/
 ```
 
 **解決手順**:
-1. ローカルでデータ取得を実行
-   ```powershell
-   py scripts/fetch_price_data.py --symbols "9501.T,9502.T" --output public/data/price
-   py scripts/build_indicators.py --symbols "9501.T,9502.T" --input public/data/price --output public/data/indicators
-   ```
+```powershell
+# ローカルでデータ取得を実行
+py -3.10 scripts/fetch_price_data.py --symbols "9501.T,9502.T" --output public/data/price
+py -3.10 scripts/build_indicators.py --symbols "9501.T,9502.T" --input public/data/price --output public/data/indicators
+```
 2. データファイルが生成されているか確認
 3. GitHub Actionsログでデータ取得ステップを確認
 
