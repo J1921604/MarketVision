@@ -21,8 +21,9 @@ npm run dev
 
 - **バージョン**: 1.0.0
 - **リリース日**: 2025年12月15日
-- **ステータス**: 実装中
+- **ステータス**: Production Ready
 - **リポジトリ**: [https://github.com/J1921604/MarketVision](https://github.com/J1921604/MarketVision)
+- **公開URL**: https://j1921604.github.io/MarketVision/
 
 ### プロジェクトドキュメント
 
@@ -152,11 +153,11 @@ MarketVision/
 ```powershell
 # 依存関係インストール
 npm install
-pip install -r scripts/requirements.txt
+py -m pip install -r scripts/requirements.txt
 
-# データ取得と指標計算
-py -3.10 scripts/fetch_price_data.py --symbols "9501.T,9502.T" --output public/data/price
-py -3.10 scripts/build_indicators.py --symbols "9501.T,9502.T" --input public/data/price --output public/data/indicators
+# データ取得と指標計算（差分更新）
+py scripts/fetch_price_data.py --symbols "9501.T,9502.T" --output public/data/price --incremental
+py scripts/build_indicators.py --symbols "9501.T,9502.T" --input public/data/price --output public/data/indicators
 
 # 開発サーバー起動
 npm run dev
@@ -180,16 +181,20 @@ cd MarketVision
 npm install
 
 # バックエンド（Python）
-pip install -r scripts/requirements.txt
+py -m pip install -r scripts/requirements.txt
 ```
 
 #### 3. 株価データの取得
 
 ```powershell
-py -3.10 scripts/fetch_price_data.py --symbols "9501.T,9502.T" --years 10
+# 過去10年分を初回取得
+py scripts/fetch_price_data.py --symbols "9501.T,9502.T" --output public/data/price
+
+# 2回目以降は差分更新（推奨）
+py scripts/fetch_price_data.py --symbols "9501.T,9502.T" --output public/data/price --incremental
 ```
 
-過去10年分のデータを `data/price/` に保存します。
+過去10年分のデータを `public/data/price/` に保存します。
 
 #### 4. 開発サーバーの起動
 
@@ -312,8 +317,9 @@ npm run test:e2e:headless
 
 `main`ブランチにpushすると、GitHub Actionsが自動的にビルド・デプロイします。
 
-- **定期スケジュール**: 毎日 17:00 JST（UTC 08:00）に Stooq データ取得→ビルド→デプロイを実行
-- **データ取得コマンド**: `py -3.10 -m pip install -r scripts/requirements.txt` 実行後に `py -3.10 scripts/fetch_price_data.py` / `py -3.10 scripts/build_indicators.py`
+- **定期スケジュール**: 毎日 07:00 JST（UTC 22:00）に Stooq データ取得→ビルド→デプロイを実行
+- **差分更新ロジック**: `--incremental` フラグにより、保存済みの日付を除く新しいデータのみを取得
+- **ワークフロー**: [.github/workflows/deploy-pages.yml](https://github.com/J1921604/MarketVision/blob/main/.github/workflows/deploy-pages.yml)
 
 ```powershell
 # 実装ブランチで作業
