@@ -1,6 +1,6 @@
 # Data Model: MarketVision 株価テクニカル分析ダッシュボード
 
-**Branch**: `feature/impl-001-MarketVision`  
+**Branch**: `001-MarketVision`  
 **Date**: 2025-12-15  
 **Phase**: 1 - 設計・契約
 

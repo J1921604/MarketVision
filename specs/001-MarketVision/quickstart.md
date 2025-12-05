@@ -150,9 +150,9 @@ py -3.10 scripts/fetch_price_data.py --symbols "9501.T,9502.T" --years 10
 
 - **[README.md](https://github.com/J1921604/MarketVision/blob/main/README.md)**: プロジェクト概要、技術スタック
 - **[spec.md](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/spec.md)**: 機能仕様書
-- **[plan.md](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/plan.md)**: 実装計画書
-- **[data-model.md](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/data-model.md)**: データモデル定義
-- **[contracts/](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/contracts/README.md)**: データ契約（CSV/JSONスキーマ）
+- **[plan.md](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/plan.md)**: 実装計画書
+- **[data-model.md](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/data-model.md)**: データモデル定義
+- **[contracts/](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/contracts/README.md)**: データ契約（CSV/JSONスキーマ）
 
 ### 🛠️ 開発に参加する
 
@@ -188,15 +188,24 @@ py -3.10 scripts/fetch_price_data.py --symbols "9501.T,9502.T" --years 10
 `main`ブランチにpushすると、GitHub Actionsが自動的にビルド・デプロイします。
 
 ```powershell
-# 実装ブランチで作業
+# 作業完了後、mainブランチにコミット
 git add .
 git commit -m "feat: 新機能の実装"
-git push origin feature/impl-001-MarketVision
+git push origin main
 
-# プルリクエスト作成後、mainにマージするとデプロイ
+# pushすると自動デプロイが開始される
 ```
 
 デプロイ後、https://j1921604.github.io/MarketVision/ でアクセスできます。
+
+---
+
+## 関連ドキュメント
+
+- **[plan.md](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/plan.md)**: 実装計画書
+- **[data-model.md](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/data-model.md)**: データモデル定義
+- **[contracts/](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/contracts/README.md)**: データ契約（CSV/JSONスキーマ）
+- **[research.md](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/research.md)**: 技術調査
 
 ### 手動ビルド
 
@@ -224,7 +233,7 @@ py -3.10 scripts/fetch_price_data.py
 
 ### Q2: テクニカル指標の計算方法は？
 
-**A**: pandas/numpyで標準的な計算方法を使用しています。詳細は [research.md](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/research.md) を参照してください。
+**A**: pandas/numpyで標準的な計算方法を使用しています。詳細は [research.md](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/research.md) を参照してください。
 
 ### Q3: カスタム期間を設定できる？
 

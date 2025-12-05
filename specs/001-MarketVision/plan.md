@@ -1,6 +1,6 @@
 # 実装計画書: MarketVision 株価テクニカル分析ダッシュボード
 
-**Branch**: `feature/impl-001-MarketVision` | **Date**: 2025-12-15 | **Spec**: [spec.md](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/spec.md)  
+**Branch**: `001-MarketVision` | **Date**: 2025-12-15 | **Spec**: [spec.md](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/spec.md)  
 **Input**: [機能仕様書](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/spec.md)  
 **Version**: 1.0.0
 
@@ -181,7 +181,7 @@
 
 **遵守状況**: ✅ 合格
 - 仕様ブランチ（`001-MarketVision`）には仕様書、計画書、タスクリストのみを含む
-- 実装ブランチ（`feature/impl-001-MarketVision`）にはソースコード、テスト、設定ファイルを含む
+- 実装ブランチ（`main`）にはソースコード、テスト、設定ファイルを含む
 - レビューで仕様と実装の乖離を検知し、是正する
 
 **検証方法**:
@@ -300,10 +300,10 @@ MarketVision/
 ## 関連ドキュメント
 
 - **[機能仕様書](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/spec.md)**: ユーザーストーリー、機能要件
-- **[research.md](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/research.md)**: 技術選定の根拠（Phase 0）
-- **[data-model.md](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/data-model.md)**: データモデル定義（Phase 1）
-- **[quickstart.md](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/quickstart.md)**: クイックスタートガイド（Phase 1）
-- **[contracts/](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/contracts/README.md)**: データ契約（Phase 1）
+- **[research.md](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/research.md)**: 技術選定の根拠（Phase 0）
+- **[data-model.md](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/data-model.md)**: データモデル定義（Phase 1）
+- **[quickstart.md](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/quickstart.md)**: クイックスタートガイド（Phase 1）
+- **[contracts/](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/contracts/README.md)**: データ契約（Phase 1）
 
 ---
 

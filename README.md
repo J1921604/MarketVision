@@ -29,11 +29,11 @@ npm run dev
 
 - **[プロジェクト憲法](https://github.com/J1921604/MarketVision/blob/main/.specify/memory/constitution.md)**: 開発原則とガバナンス（7つのコア原則）
 - **[機能仕様書](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/spec.md)**: ユーザーストーリー、機能要件、成功基準
-- **[実装計画書](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/plan.md)**: 技術選定、アーキテクチャ設計、Constitution Check
-- **[タスクリスト](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/tasks.md)**: 実装タスク一覧、ガントチャート
-- **[技術調査](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/research.md)**: 技術選定の根拠、代替案評価
-- **[データモデル](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/data-model.md)**: エンティティ定義、ER図、型定義
-- **[データ契約](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/contracts/README.md)**: CSV/JSONスキーマ、検証ルール
+- **[実装計画書](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/plan.md)**: 技術選定、アーキテクチャ設計、Constitution Check
+- **[タスクリスト](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/tasks.md)**: 実装タスク一覧、ガントチャート
+- **[技術調査](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/research.md)**: 技術選定の根拠、代替案評価
+- **[データモデル](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/data-model.md)**: エンティティ定義、ER図、型定義
+- **[データ契約](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/contracts/README.md)**: CSV/JSONスキーマ、検証ルール
 
 ## 📋 主要機能
 
@@ -60,7 +60,7 @@ npm run dev
 
 ## 📋 7つのコア原則（憲法準拠）
 
-このプロジェクトは `.specify/memory/constitution.md` で定義された原則に従います：
+このプロジェクトは [constitution.md](https://github.com/J1921604/MarketVision/blob/main/.specify/memory/constitution.md) で定義された原則に従います：
 
 1. **テスト駆動開発 (TDD)**: カバレッジ目標 ユニット80%以上、E2E主要フロー100%
 2. **セキュリティ最優先**: 外部入力検証、秘密情報の環境変数管理、依存関係脆弱性スキャン
@@ -68,7 +68,7 @@ npm run dev
 4. **データ品質の保証**: Stooq公式API利用、スキーマ検証、異常値検出
 5. **API/ライブラリ仕様の遵守**: Stooq利用規約遵守、リトライ最大3回、クレジット表記
 6. **バージョン固定とメンテナンス性**: 依存関係メジャー・マイナー固定、CHANGELOG.md追跡
-7. **仕様と実装の分離**: 仕様ブランチ（001-MarketVision）と実装ブランチ（feature/impl-001-MarketVision）の分離
+7. **仕様と実装の分離**: 仕様ブランチ（001-MarketVision）と実装ブランチ（main）の分離
 
 詳細は [constitution.md](https://github.com/J1921604/MarketVision/blob/main/.specify/memory/constitution.md) を参照してください。
 

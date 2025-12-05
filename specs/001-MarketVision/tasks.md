@@ -1,9 +1,73 @@
 # Tasks: MarketVision 株価テクニカル分析ダッシュボード
 
-**Input**: [plan.md](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/plan.md), [spec.md](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/spec.md), [data-model.md](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/data-model.md), [contracts/](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/contracts/)  
+**Input**: [plan.md](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/plan.md), [spec.md](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/spec.md), [data-model.md](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/data-model.md), [contracts/](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/contracts/)  
 **Version**: 1.0.0  
 **Last Updated**: 2025-12-15  
 **Repository**: https://github.com/J1921604/MarketVision
+
+---
+
+## 実装スケジュール（ガントチャート）
+
+```mermaid
+gantt
+    title MarketVision 実装スケジュール
+    dateFormat YYYY-MM-DD
+    axisFormat %m/%d
+    excludes weekends 2025-12-27 2025-12-28 2025-12-29 2025-12-30 2025-12-31 2026-01-01 2026-01-02 2026-01-03 2026-01-04
+    
+    section Phase 1: Setup
+    プロジェクト構造作成           :p1_1, 2025-12-15, 1d
+    依存関係インストール           :p1_2, after p1_1, 1d
+    ビルド環境設定                 :p1_3, after p1_2, 1d
+    
+    section Phase 2: Foundational
+    型定義作成                     :p2_1, after p1_3, 1d
+    CI/CDワークフロー設定          :p2_2, after p2_1, 1d
+    データディレクトリ準備         :p2_3, after p2_2, 1d
+    
+    section Phase 3: US1 株価チャート
+    データ取得スクリプト           :p3_1, after p2_3, 2d
+    データ検証スクリプト           :p3_2, after p3_1, 1d
+    フロントエンドフック           :p3_3, after p3_2, 2d
+    チャートコンポーネント         :p3_4, after p3_3, 2d
+    E2Eテスト                      :p3_5, after p3_4, 1d
+    
+    section Phase 4: US2 テクニカル指標
+    指標計算スクリプト             :p4_1, after p3_5, 3d
+    指標表示コンポーネント         :p4_2, after p4_1, 3d
+    ユニットテスト                 :p4_3, after p4_2, 1d
+    
+    section Phase 5: US3 企業間比較
+    複数銘柄対応                   :p5_1, after p4_3, 2d
+    比較表示UI                     :p5_2, after p5_1, 1d
+    
+    section Phase 6: US5 イベントマーカー
+    イベントデータ準備             :p6_1, after p5_2, 1d
+    マーカー表示実装               :p6_2, after p6_1, 2d
+    
+    section Phase 7: US6 アラート
+    アラート検出ロジック           :p7_1, after p6_2, 1d
+    バナー表示実装                 :p7_2, after p7_1, 1d
+    
+    section Phase 8: Polish
+    ドキュメント更新               :p8_1, after p7_2, 2d
+    パフォーマンス最適化           :p8_2, after p8_1, 2d
+    最終テスト                     :p8_3, after p8_2, 1d
+    デプロイ                       :crit, p8_4, after p8_3, 1d
+```
+
+**スケジュール概要**:
+- **開始日**: 2025年12月15日（月）
+- **完了予定**: 2026年1月中旬
+- **休日除外**: 土日、年末年始（12/27-1/4）
+- **総作業日数**: 約30営業日
+
+**相対日付方式**: 
+- 開始日を変更する場合は、`p1_1`の日付（2025-12-15）を修正してください
+- 各タスクは`after`で前タスクに依存する相対日付で定義されています
+
+---
 
 ## タスクフォーマット
 
@@ -371,130 +435,6 @@ code MACDChart.tsx  # T035実装
    - 各ユーザーストーリーは独立してテスト可能
    - Checkpoint到達まで次のストーリーに進まない
    - バグ修正は該当ストーリー内で完結
-
----
-
-## Gantt Chart（ガントチャート - 相対日付方式）
-
-**開始日**: 2025-12-15（日曜）  
-**休日考慮**: 土日・年末年始（12/28-1/5）を除外  
-**作業日数**: 1タスク = 0.5～2営業日想定
-
-```mermaid
-gantt
-    title MarketVision 実装スケジュール（2025-12-15開始、土日・年末年始休暇考慮）
-    dateFormat YYYY-MM-DD
-    axisFormat %m/%d
-    
-    section Phase 1 Setup
-    T001-T008 Setup Tasks           :p1, 2025-12-16, 2d
-    
-    section Phase 2 Foundational
-    T009-T012 Foundational Tasks    :p2, after p1, 2d
-    
-    section Phase 3 US1 (P1) MVP
-    T013-T015 Data Fetch            :us1_data, after p2, 2d
-    T016-T021 Frontend              :us1_fe, after us1_data, 3d
-    T022-T023 E2E Test              :us1_test, after us1_fe, 1d
-    
-    section Phase 4 US2 (P1)
-    T024-T030 Indicator Calc        :us2_calc, after us1_test, 3d
-    T031-T037 Frontend              :us2_fe, after us2_calc, 3d
-    T038-T040 Tests                 :us2_test, after us2_fe, 2d
-    
-    section Phase 5 US3 (P2)
-    T041-T044 Frontend              :us3_fe, after us2_test, 2d
-    T045 E2E Test                   :us3_test, after us3_fe, 1d
-    
-    section Phase 6 US5 (P3)
-    T046-T049 Event Markers         :us5_impl, after us3_test, 2d
-    T050 E2E Test                   :us5_test, after us5_impl, 1d
-    
-    section Phase 7 US6 (P3)
-    T051-T054 Alert Banner          :us6_impl, after us5_test, 2d
-    T055 E2E Test                   :us6_test, after us6_impl, 1d
-    
-    section Phase 8 Polish
-    T056-T066 Polish & Docs         :polish, after us6_test, 3d
-```
-
-### スケジュール計算ロジック（相対日付方式）
-
-1. **開始日**: `START_DATE = 2025-12-15`（ユーザー指定、任意変更可能）
-2. **営業日計算**: 土日・年末年始（12/28-1/5）を除外
-3. **各Phaseの終了日**: 前Phase終了日 + 営業日数
-4. **並列タスク**: 同一Phase内で最長タスクの日数を採用
-
-#### 営業日カウント例（2025-12-15開始）
-
-| Phase | タスク範囲 | 営業日数 | 開始日 | 終了日 |
-|-------|----------|---------|--------|--------|
-| Phase 1 | T001-T008 | 2日 | 12/16（月） | 12/17（火） |
-| Phase 2 | T009-T012 | 2日 | 12/18（水） | 12/19（木） |
-| Phase 3 | T013-T023 | 6日 | 12/20（金） | 12/27（金） |
-| Phase 4 | T024-T040 | 8日 | 1/6（月）※ | 1/15（水） |
-| Phase 5 | T041-T045 | 3日 | 1/16（木） | 1/20（月） |
-| Phase 6 | T046-T050 | 3日 | 1/21（火） | 1/23（木） |
-| Phase 7 | T051-T055 | 3日 | 1/24（金） | 1/28（火） |
-| Phase 8 | T056-T066 | 3日 | 1/29（水） | 1/31（金） |
-
-※ 12/28-1/5は年末年始休暇のため、12/27（金）完了後、1/6（月）から再開
-
-**総営業日数**: 30営業日（約6週間）  
-**完成予定日**: 2025-01-31（金）
-
-### スケジュール変更方法
-
-開始日を変更する場合、`START_DATE`を更新すれば全日程が自動再計算されます。
-
-```python
-# スケジュール再計算スクリプト例
-from datetime import datetime, timedelta
-
-START_DATE = datetime(2025, 12, 15)  # ここを変更
-HOLIDAYS = [  # 土日以外の休日
-    datetime(2025, 12, 28), datetime(2025, 12, 29),
-    datetime(2025, 12, 30), datetime(2025, 12, 31),
-    datetime(2026, 1, 1), datetime(2026, 1, 2),
-    datetime(2026, 1, 3), datetime(2026, 1, 4),
-    datetime(2026, 1, 5)
-]
-
-def add_business_days(start, days):
-    current = start
-    added = 0
-    while added < days:
-        current += timedelta(days=1)
-        if current.weekday() < 5 and current not in HOLIDAYS:  # 月-金 & 休日でない
-            added += 1
-    return current
-
-# Phase毎の日数
-phase_days = {
-    'Phase 1': 2,
-    'Phase 2': 2,
-    'Phase 3': 6,
-    'Phase 4': 8,
-    'Phase 5': 3,
-    'Phase 6': 3,
-    'Phase 7': 3,
-    'Phase 8': 3
-}
-
-current_date = START_DATE
-for phase, days in phase_days.items():
-    end_date = add_business_days(current_date, days)
-    print(f"{phase}: {current_date.strftime('%Y-%m-%d')} → {end_date.strftime('%Y-%m-%d')}")
-    current_date = end_date
-```
-
----
-
-## Version History（バージョン履歴）
-
-| Version | Date | Changes |
-|---------|------|---------|
-| 1.0.0 | 2025-12-15 | 初版リリース - 全Phase定義、ガントチャート、並列実行例追加 |
 
 ---
 

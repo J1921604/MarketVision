@@ -255,9 +255,9 @@ flowchart TB
 ## 関連ドキュメント
 
 - **[プロジェクト憲法](https://github.com/J1921604/MarketVision/blob/main/.specify/memory/constitution.md)**: 開発原則とガバナンス
-- **[実装計画書](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/plan.md)**: 技術選定、アーキテクチャ設計
-- **[タスクリスト](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/tasks.md)**: 実装タスク一覧、ガントチャート
-- **[要件チェックリスト](https://github.com/J1921604/MarketVision/blob/main/specs/feature/impl-001-MarketVision/checklists/requirements.md)**: 仕様品質検証
+- **[実装計画書](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/plan.md)**: 技術選定、アーキテクチャ設計
+- **[タスクリスト](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/tasks.md)**: 実装タスク一覧、ガントチャート
+- **[要件チェックリスト](https://github.com/J1921604/MarketVision/blob/main/specs/001-MarketVision/checklists/requirements.md)**: 仕様品質検証
 - **[README](https://github.com/J1921604/MarketVision/blob/main/README.md)**: プロジェクト概要
 
 ---
